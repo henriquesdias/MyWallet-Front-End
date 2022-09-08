@@ -53,9 +53,9 @@ export default function PrincipalPage() {
               <span>
                 {transitions.reduce((total, element) => {
                   if (element.isOutput) {
-                    total -= element.value;
+                    total -= Number(element.value);
                   } else {
-                    total += element.value;
+                    total += Number(element.value);
                   }
                   return total;
                 }, 0)}
@@ -68,7 +68,7 @@ export default function PrincipalPage() {
         <div onClick={() => navigate("/new-entry", { state })}>
           <IconIn></IconIn> <span>Nova entrada</span>
         </div>
-        <div>
+        <div onClick={() => navigate("/new-output", { state })}>
           <IconOut></IconOut> <span>Nova saída</span>
         </div>
       </OperationsStyle>
