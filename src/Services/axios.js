@@ -8,4 +8,7 @@ function signIn(body) {
 function getTransitions(config) {
   return axios.get("http://localhost:5000/transitions", config);
 }
-export { signUp, signIn, getTransitions };
+function sendTransition(body, config) {
+  return axios.post("http://localhost:5000/transitions", body, config);
+}
+export { signUp, signIn, getTransitions, sendTransition };

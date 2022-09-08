@@ -11,10 +11,12 @@ import styled from "styled-components";
 import Transition from "../Transition";
 import { useEffect, useState } from "react";
 import { getTransitions } from "../../Services/axios";
+import { useNavigate } from "react-router-dom";
 
 export default function PrincipalPage() {
   const [transitions, setTransitions] = useState([]);
   const { state } = useLocation();
+  const navigate = useNavigate();
   useEffect(() => {
     getTransitions({ headers: { Authorization: `Bearer ${state.token}` } })
       .then((answer) => {
@@ -63,7 +65,7 @@ export default function PrincipalPage() {
         )}
       </AreaTransitionStyle>
       <OperationsStyle>
-        <div>
+        <div onClick={() => navigate("/new-entry", { state })}>
           <IconIn></IconIn> <span>Nova entrada</span>
         </div>
         <div>
