@@ -10,8 +10,8 @@ function App() {
       <ResetStyle />
       <BodyStyle />
       <Routes>
-        <Route path="/tira-depois" element={<SignIn />}></Route>
-        <Route path="/" element={<PrincipalPage />}></Route>
+        <Route path="/" element={<SignIn />}></Route>
+        <Route path="/principal-page" element={<PrincipalPage />}></Route>
         <Route path="/sign-up" element={<SignUp />}></Route>
       </Routes>
     </BrowserRouter>

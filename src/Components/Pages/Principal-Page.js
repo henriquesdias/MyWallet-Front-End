@@ -1,6 +1,7 @@
 import PrincipalPageStyle from "../../Styles/principal-page";
 import AreaTransitionStyle from "../../Styles/transitions";
 import ListOfTransitionsStyle from "../../Styles/list-transitions";
+import { useLocation } from "react-router-dom";
 import {
   IoAddCircleOutline,
   IoExitOutline,
@@ -11,10 +12,11 @@ import Transition from "../Transition";
 import { useState } from "react";
 export default function PrincipalPage() {
   const [transitions, setTransitions] = useState({});
+  const { state } = useLocation();
   return (
     <PrincipalPageStyle>
       <span>
-        <p>Olá, Henrique</p>
+        <p>Olá, {state.name}</p>
         <IconExit></IconExit>
       </span>
       <AreaTransitionStyle>

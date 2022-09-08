@@ -19,7 +19,7 @@ export default function SignIn() {
     signIn(form)
       .then((answer) => {
         setIsBlocked(false);
-        console.log(answer);
+        navigate("/principal-page", { state: { ...answer.data } });
         // navigate("/");
       })
       .catch((answer) => {
