@@ -10,9 +10,8 @@ const FormStyle = styled.form`
   input {
     background-color: #ffffff;
     border-radius: 5px;
-    max-width: 326px;
-    width: 100%;
     height: 58px;
+    width: 90%;
     color: black;
     font-size: 20px;
     outline: none;
