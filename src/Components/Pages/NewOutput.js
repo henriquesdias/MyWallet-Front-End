@@ -3,7 +3,7 @@ import ButtonStyle from "../../Styles/Button";
 import NewMovimentationStyle from "../../Styles/newMovimentation";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { sendTransition } from "../../Services/axios";
+import { sendRegistry } from "../../Services/axios";
 export default function NewOutput() {
   const [isBlocked, setIsBlocked] = useState(false);
   const { state } = useLocation();
@@ -16,7 +16,7 @@ export default function NewOutput() {
   function submitData(event) {
     event.preventDefault();
     setIsBlocked(true);
-    sendTransition(form, {
+    sendRegistry(form, {
       headers: { Authorization: `Bearer ${state.token}` },
     })
       .then((answer) => {

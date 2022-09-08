@@ -1,6 +1,7 @@
 import { IoCloseOutline } from "react-icons/io5";
 import styled from "styled-components";
-export default function Transition({ date, description, value, isOutput }) {
+export default function Registry({ date, description, value, isOutput, id }) {
+  const idRegistry = id;
   return (
     <TransitionStyle isOutput={isOutput}>
       <div>

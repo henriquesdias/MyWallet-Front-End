@@ -1,6 +1,6 @@
 import PrincipalPageStyle from "../../Styles/principal-page";
-import AreaTransitionStyle from "../../Styles/transitions";
-import ListOfTransitionsStyle from "../../Styles/list-transitions";
+import AreaRegistriesStyle from "../../Styles/registries";
+import ListOfRegistriesStyle from "../../Styles/list-registries";
 import { useLocation } from "react-router-dom";
 import {
   IoAddCircleOutline,
@@ -8,19 +8,19 @@ import {
   IoRemoveCircleOutline,
 } from "react-icons/io5";
 import styled from "styled-components";
-import Transition from "../Transition";
+import Registry from "../Registry";
 import { useEffect, useState } from "react";
-import { getTransitions } from "../../Services/axios";
+import { getRegistries } from "../../Services/axios";
 import { useNavigate } from "react-router-dom";
 
 export default function PrincipalPage() {
-  const [transitions, setTransitions] = useState([]);
+  const [registries, setRegistries] = useState([]);
   const { state } = useLocation();
   const navigate = useNavigate();
   useEffect(() => {
-    getTransitions({ headers: { Authorization: `Bearer ${state.token}` } })
+    getRegistries({ headers: { Authorization: `Bearer ${state.token}` } })
       .then((answer) => {
-        setTransitions(answer.data);
+        setRegistries(answer.data);
       })
       .catch((answer) => {
         console.log(answer);
@@ -30,28 +30,36 @@ export default function PrincipalPage() {
     <PrincipalPageStyle>
       <span>
         <p>Olá, {state.name}</p>
-        <IconExit></IconExit>
+        <IconExit
+          onClick={() => {
+            const answer = window.confirm("Deseja sair da conta ?");
+            if (answer) {
+              navigate("/");
+            }
+          }}
+        ></IconExit>
       </span>
-      <AreaTransitionStyle>
-        {transitions.length === 0 ? (
+      <AreaRegistriesStyle>
+        {registries.length === 0 ? (
           <p>Não há registros de entrada ou saída</p>
         ) : (
           <>
-            <ListOfTransitionsStyle>
-              {transitions.map((e, index) => (
-                <Transition
+            <ListOfRegistriesStyle>
+              {registries.map((e, index) => (
+                <Registry
                   key={index}
                   date={e.date}
                   description={e.description}
                   value={e.value}
                   isOutput={e.isOutput}
-                ></Transition>
+                  id={e._id}
+                ></Registry>
               ))}
-            </ListOfTransitionsStyle>
+            </ListOfRegistriesStyle>
             <div>
               <span>SALDO</span>
               <span>
-                {transitions.reduce((total, element) => {
+                {registries.reduce((total, element) => {
                   if (element.isOutput) {
                     total -= Number(element.value);
                   } else {
@@ -63,7 +71,7 @@ export default function PrincipalPage() {
             </div>
           </>
         )}
-      </AreaTransitionStyle>
+      </AreaRegistriesStyle>
       <OperationsStyle>
         <div onClick={() => navigate("/new-entry", { state })}>
           <IconIn></IconIn> <span>Nova entrada</span>

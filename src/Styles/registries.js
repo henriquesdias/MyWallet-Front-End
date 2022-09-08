@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const AreaTransitionStyle = styled.div`
+const AreaRegistriesStyle = styled.div`
   background-color: white;
   height: 446px;
   border-radius: 5px;
@@ -28,4 +28,4 @@ const AreaTransitionStyle = styled.div`
     }
   }
 `;
-export default AreaTransitionStyle;
+export default AreaRegistriesStyle;

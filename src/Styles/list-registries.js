@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const ListOfTransitionsStyle = styled.ul`
+const ListOfRegistriesStyle = styled.ul`
   background-color: white;
   height: 100%;
   width: 100%;
@@ -9,4 +9,4 @@ const ListOfTransitionsStyle = styled.ul`
   height: 395px;
   overflow-y: scroll;
 `;
-export default ListOfTransitionsStyle;
+export default ListOfRegistriesStyle;

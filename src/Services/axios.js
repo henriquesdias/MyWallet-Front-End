@@ -5,10 +5,10 @@ function signUp(body) {
 function signIn(body) {
   return axios.post("http://localhost:5000/sign-in", body);
 }
-function getTransitions(config) {
-  return axios.get("http://localhost:5000/transitions", config);
+function getRegistries(config) {
+  return axios.get("http://localhost:5000/registries", config);
 }
-function sendTransition(body, config) {
-  return axios.post("http://localhost:5000/transitions", body, config);
+function sendRegistry(body, config) {
+  return axios.post("http://localhost:5000/registries", body, config);
 }
-export { signUp, signIn, getTransitions, sendTransition };
+export { signUp, signIn, getRegistries, sendRegistry };
