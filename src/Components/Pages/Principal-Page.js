@@ -9,10 +9,21 @@ import {
 } from "react-icons/io5";
 import styled from "styled-components";
 import Transition from "../Transition";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getTransitions } from "../../Services/axios";
+
 export default function PrincipalPage() {
-  const [transitions, setTransitions] = useState({});
+  const [transitions, setTransitions] = useState([]);
   const { state } = useLocation();
+  useEffect(() => {
+    getTransitions({ headers: { Authorization: `Bearer ${state.token}` } })
+      .then((answer) => {
+        setTransitions(answer.data);
+      })
+      .catch((answer) => {
+        console.log(answer);
+      });
+  }, []);
   return (
     <PrincipalPageStyle>
       <span>
@@ -20,16 +31,36 @@ export default function PrincipalPage() {
         <IconExit></IconExit>
       </span>
       <AreaTransitionStyle>
-        {/* <p>Não há registros de entrada ou saída</p> */}
-        <ListOfTransitionsStyle>
-          <Transition></Transition>
-          <Transition></Transition>
-          <Transition></Transition>
-        </ListOfTransitionsStyle>
-        <div>
-          <span>SALDO</span>
-          <span>2849.90</span>
-        </div>
+        {transitions.length === 0 ? (
+          <p>Não há registros de entrada ou saída</p>
+        ) : (
+          <>
+            <ListOfTransitionsStyle>
+              {transitions.map((e, index) => (
+                <Transition
+                  key={index}
+                  date={e.date}
+                  description={e.description}
+                  value={e.value}
+                  isOutput={e.isOutput}
+                ></Transition>
+              ))}
+            </ListOfTransitionsStyle>
+            <div>
+              <span>SALDO</span>
+              <span>
+                {transitions.reduce((total, element) => {
+                  if (element.isOutput) {
+                    total -= element.value;
+                  } else {
+                    total += element.value;
+                  }
+                  return total;
+                }, 0)}
+              </span>
+            </div>
+          </>
+        )}
       </AreaTransitionStyle>
       <OperationsStyle>
         <div>

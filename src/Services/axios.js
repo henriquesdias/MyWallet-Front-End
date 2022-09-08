@@ -5,4 +5,7 @@ function signUp(body) {
 function signIn(body) {
   return axios.post("http://localhost:5000/sign-in", body);
 }
-export { signUp, signIn };
+function getTransitions(config) {
+  return axios.get("http://localhost:5000/transitions", config);
+}
+export { signUp, signIn, getTransitions };

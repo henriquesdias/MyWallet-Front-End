@@ -4,11 +4,11 @@ export default function Transition({ date, description, value, isOutput }) {
   return (
     <TransitionStyle isOutput={isOutput}>
       <div>
-        <span>30/11</span>
-        <span>Almoço com a família</span>
+        <span>{date}</span>
+        <span>{description}</span>
       </div>
       <span>
-        150
+        {value}
         <IconExclude></IconExclude>
       </span>
     </TransitionStyle>
