@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { signUp } from "../../Services/axios";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function SignUp() {
   const [isBlocked, setIsBlocked] = useState(false);
@@ -80,7 +81,11 @@ export default function SignUp() {
           readOnly={isBlocked}
         />
         <ButtonStyle type="submit" disabled={isBlocked}>
-          Cadastrar
+          {!isBlocked ? (
+            "Cadastrar"
+          ) : (
+            <ThreeDots color="#FFFFFF" height={80} width={80} />
+          )}
         </ButtonStyle>
         <Link to={"/"} style={{ textDecoration: "none" }}>
           <p>Já tem uma conta? Entre agora!</p>

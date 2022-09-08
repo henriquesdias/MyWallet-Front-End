@@ -1,15 +1,67 @@
 import FormStyle from "../../Styles/form";
 import ButtonStyle from "../../Styles/Button";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { signIn } from "../../Services/axios";
+import { ThreeDots } from "react-loader-spinner";
+
 export default function SignIn() {
+  const [isBlocked, setIsBlocked] = useState(false);
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+  const navigate = useNavigate();
+  function submitData(event) {
+    event.preventDefault();
+    setIsBlocked(true);
+    signIn(form)
+      .then((answer) => {
+        setIsBlocked(false);
+        console.log(answer);
+        // navigate("/");
+      })
+      .catch((answer) => {
+        setIsBlocked(false);
+        alert("Dados inválidos");
+      });
+  }
+  function handleForm(e) {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  }
   return (
     <SignInStyle>
       <h1>MyWallet</h1>
-      <FormStyle>
-        <input type="email" placeholder="E-mail" name="email" required />
-        <input type="password" placeholder="Senha" name="password" required />
-        <ButtonStyle>Entrar</ButtonStyle>
+      <FormStyle onSubmit={submitData}>
+        <input
+          type="email"
+          placeholder="E-mail"
+          name="email"
+          required
+          value={form.email}
+          onChange={handleForm}
+          readOnly={isBlocked}
+        />
+        <input
+          type="password"
+          placeholder="Senha"
+          name="password"
+          required
+          value={form.password}
+          onChange={handleForm}
+          readOnly={isBlocked}
+        />
+        <ButtonStyle type="submit" disabled={isBlocked}>
+          {!isBlocked ? (
+            "Entrar"
+          ) : (
+            <ThreeDots color="#FFFFFF" height={80} width={80} />
+          )}
+        </ButtonStyle>
         <Link to={"/sign-up"} style={{ textDecoration: "none" }}>
           <p>Primeira vez? Cadastre-se!</p>
         </Link>
