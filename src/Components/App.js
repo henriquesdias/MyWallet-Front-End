@@ -6,6 +6,7 @@ import BodyStyle from "../Styles/body";
 import PrincipalPage from "./Pages/Principal-Page";
 import NewEntry from "./Pages/ NewEntry";
 import NewOutput from "./Pages/NewOutput";
+import UserContext from "./context/userContext";
 function App() {
   return (
     <BrowserRouter>

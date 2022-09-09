@@ -4,6 +4,7 @@ import NewMovimentationStyle from "../../Styles/newMovimentation";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { sendRegistry } from "../../Services/axios";
+import { ThreeDots } from "react-loader-spinner";
 export default function NewOutput() {
   const [isBlocked, setIsBlocked] = useState(false);
   const { state } = useLocation();
@@ -15,6 +16,9 @@ export default function NewOutput() {
   const navigate = useNavigate();
   function submitData(event) {
     event.preventDefault();
+    if (isNaN(form.value)) {
+      alert("Digite um valor válido");
+    }
     setIsBlocked(true);
     sendRegistry(form, {
       headers: { Authorization: `Bearer ${state.token}` },
@@ -57,7 +61,11 @@ export default function NewOutput() {
           readOnly={isBlocked}
         />
         <ButtonStyle type="submit" disabled={isBlocked}>
-          Salvar saída
+          {isBlocked ? (
+            <ThreeDots color="#FFFFFF" height={80} width={80} />
+          ) : (
+            "Salvar saída"
+          )}
         </ButtonStyle>
       </FormStyle>
     </NewMovimentationStyle>
