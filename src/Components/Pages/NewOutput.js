@@ -23,6 +23,7 @@ export default function NewOutput() {
         navigate("/principal-page", { state });
       })
       .catch((answer) => {
+        setIsBlocked(false);
         console.log(answer);
       });
   }

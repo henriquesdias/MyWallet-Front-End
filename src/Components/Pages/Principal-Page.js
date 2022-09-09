@@ -58,7 +58,7 @@ export default function PrincipalPage() {
             </ListOfRegistriesStyle>
             <div>
               <span>SALDO</span>
-              <span>
+              <TotalValue>
                 {registries.reduce((total, element) => {
                   if (element.isOutput) {
                     total -= Number(element.value);
@@ -67,7 +67,7 @@ export default function PrincipalPage() {
                   }
                   return total;
                 }, 0)}
-              </span>
+              </TotalValue>
             </div>
           </>
         )}
@@ -83,6 +83,13 @@ export default function PrincipalPage() {
     </PrincipalPageStyle>
   );
 }
+function TotalValue(props) {
+  const isPositive = Number(props.children) >= 0;
+  return <TotalvalueStyle color={isPositive}>{props.children}</TotalvalueStyle>;
+}
+const TotalvalueStyle = styled.span`
+  color: ${(props) => (props.color ? "green" : "red")};
+`;
 const OperationsStyle = styled.footer`
   max-width: 600px;
   width: 100%;
