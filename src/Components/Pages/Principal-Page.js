@@ -1,20 +1,21 @@
 import PrincipalPageStyle from "../../Styles/principal-page";
 import AreaRegistriesStyle from "../../Styles/registries";
 import ListOfRegistriesStyle from "../../Styles/list-registries";
-import { useLocation } from "react-router-dom";
 import { IconIn, IconExit, IconOut } from "../../Styles/icons";
 import styled from "styled-components";
 import Registry from "../Registry";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { getRegistries } from "../../Services/axios";
 import { useNavigate } from "react-router-dom";
 import OperationsStyle from "../../Styles/operations";
+import UserContext from "../context/userContext";
+
 export default function PrincipalPage() {
   const [registries, setRegistries] = useState([]);
-  const { state } = useLocation();
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
   useEffect(() => {
-    getRegistries({ headers: { Authorization: `Bearer ${state.token}` } })
+    getRegistries({ headers: { Authorization: `Bearer ${user.token}` } })
       .then((answer) => {
         setRegistries(answer.data);
       })
@@ -25,7 +26,7 @@ export default function PrincipalPage() {
   return (
     <PrincipalPageStyle>
       <span>
-        <p>Olá, {state.name}</p>
+        <p>Olá, {user.name}</p>
         <IconExit
           onClick={() => {
             const answer = window.confirm("Deseja sair da conta ?");
@@ -69,10 +70,10 @@ export default function PrincipalPage() {
         )}
       </AreaRegistriesStyle>
       <OperationsStyle>
-        <div onClick={() => navigate("/new-entry", { state })}>
+        <div onClick={() => navigate("/new-entry")}>
           <IconIn></IconIn> <span>Nova entrada</span>
         </div>
-        <div onClick={() => navigate("/new-output", { state })}>
+        <div onClick={() => navigate("/new-output")}>
           <IconOut></IconOut> <span>Nova saída</span>
         </div>
       </OperationsStyle>

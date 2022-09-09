@@ -2,12 +2,14 @@ import FormStyle from "../../Styles/form";
 import ButtonStyle from "../../Styles/Button";
 import NewMovimentationStyle from "../../Styles/newMovimentation";
 import { ThreeDots } from "react-loader-spinner";
-import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
+import UserContext from "../context/userContext";
+import { useNavigate } from "react-router-dom";
 import { sendRegistry } from "../../Services/axios";
+
 export default function NewEntry() {
   const [isBlocked, setIsBlocked] = useState(false);
-  const { state } = useLocation();
+  const { user } = useContext(UserContext);
   const [form, setForm] = useState({
     value: "",
     description: "",
@@ -21,10 +23,10 @@ export default function NewEntry() {
     }
     setIsBlocked(true);
     sendRegistry(form, {
-      headers: { Authorization: `Bearer ${state.token}` },
+      headers: { Authorization: `Bearer ${user.token}` },
     })
       .then((answer) => {
-        navigate("/principal-page", { state });
+        navigate("/principal-page");
       })
       .catch((answer) => {
         setIsBlocked(false);

@@ -2,12 +2,14 @@ import FormStyle from "../../Styles/form";
 import ButtonStyle from "../../Styles/Button";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { signIn } from "../../Services/axios";
 import { ThreeDots } from "react-loader-spinner";
+import UserContext from "../context/userContext";
 
 export default function SignIn() {
   const [isBlocked, setIsBlocked] = useState(false);
+  const { setUser } = useContext(UserContext);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -19,8 +21,16 @@ export default function SignIn() {
     signIn(form)
       .then((answer) => {
         setIsBlocked(false);
-        navigate("/principal-page", { state: { ...answer.data } });
-        // navigate("/");
+        setUser(answer.data);
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            email: form.email,
+            password: form.password,
+            token: answer.data.token,
+          })
+        );
+        navigate("/principal-page");
       })
       .catch((answer) => {
         setIsBlocked(false);
