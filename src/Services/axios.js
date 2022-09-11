@@ -14,4 +14,18 @@ function sendRegistry(body, config) {
 function deleteRegistry(idRegistry, config) {
   return axios.delete(`http://localhost:5000/registries/${idRegistry}`, config);
 }
-export { signUp, signIn, getRegistries, sendRegistry, deleteRegistry };
+function updateRegistry(idRegistry, body, config) {
+  return axios.put(
+    `http://localhost:5000/registries/${idRegistry}`,
+    body,
+    config
+  );
+}
+export {
+  signUp,
+  signIn,
+  getRegistries,
+  sendRegistry,
+  deleteRegistry,
+  updateRegistry,
+};

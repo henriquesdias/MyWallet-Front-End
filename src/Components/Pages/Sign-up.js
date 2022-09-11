@@ -23,15 +23,17 @@ export default function SignUp() {
       setIsBlocked(false);
       return;
     }
-    delete form.confirmPassword;
     signUp(form)
-      .then((answer) => {
+      .then(() => {
         setIsBlocked(false);
         navigate("/");
       })
       .catch((answer) => {
+        console.log(answer);
+        if (answer.response.status === 409) {
+          alert(answer.response.data);
+        }
         setIsBlocked(false);
-        alert("Dados inválidos");
       });
   }
   function handleForm(e) {

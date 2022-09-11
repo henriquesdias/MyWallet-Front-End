@@ -20,12 +20,13 @@ export default function NewEntry() {
     event.preventDefault();
     if (isNaN(form.value)) {
       alert("Digite um valor válido");
+      return;
     }
     setIsBlocked(true);
     sendRegistry(form, {
       headers: { Authorization: `Bearer ${user.token}` },
     })
-      .then((answer) => {
+      .then(() => {
         navigate("/principal-page");
       })
       .catch((answer) => {
@@ -43,7 +44,6 @@ export default function NewEntry() {
     <NewMovimentationStyle>
       <FormStyle onSubmit={submitData}>
         <h1>Nova entrada</h1>
-
         <input
           type="text"
           placeholder="Valor"

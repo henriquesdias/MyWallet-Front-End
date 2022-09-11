@@ -8,6 +8,8 @@ import NewEntry from "./Pages/ NewEntry";
 import NewOutput from "./Pages/NewOutput";
 import UserContext from "./context/userContext";
 import { useState } from "react";
+import EntryUpdate from "./Pages/EntryUpdate";
+import OutputUpdate from "./Pages/OutputUpdate";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -27,6 +29,8 @@ function App() {
           <Route path="/sign-up" element={<SignUp />}></Route>
           <Route path="/new-entry" element={<NewEntry />}></Route>
           <Route path="/new-output" element={<NewOutput />}></Route>
+          <Route path="/entry-update" element={<EntryUpdate />}></Route>
+          <Route path="/output-update" element={<OutputUpdate />}></Route>
         </Routes>
       </UserContext.Provider>
     </BrowserRouter>

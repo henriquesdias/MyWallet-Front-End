@@ -2,7 +2,7 @@ import FormStyle from "../../Styles/form";
 import ButtonStyle from "../../Styles/Button";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { signIn } from "../../Services/axios";
 import { ThreeDots } from "react-loader-spinner";
 import UserContext from "../context/userContext";
@@ -15,6 +15,12 @@ export default function SignIn() {
     password: "",
   });
   const navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("user") !== null) {
+      setUser(JSON.parse(localStorage.getItem("user")));
+      navigate("/principal-page");
+    }
+  }, []);
   function submitData(event) {
     event.preventDefault();
     setIsBlocked(true);

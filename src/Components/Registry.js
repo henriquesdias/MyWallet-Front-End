@@ -22,7 +22,7 @@ export default function Registry({
       headers: { Authorization: `Bearer ${user.token}` },
     })
       .catch((answer) => console.log(answer))
-      .then((answer) => {
+      .then(() => {
         setRegistries([...registries.filter((e) => e._id !== id)]);
         navigate("/principal-page");
       });
@@ -31,7 +31,17 @@ export default function Registry({
     <RegistryStyle isOutput={isOutput}>
       <div>
         <span>{date}</span>
-        <span>{description}</span>
+        <span
+          onClick={() => {
+            if (isOutput) {
+              navigate("/output-update", { state: { id } });
+            } else {
+              navigate("/entry-update", { state: { id } });
+            }
+          }}
+        >
+          {description}
+        </span>
       </div>
       <span>
         {value}
