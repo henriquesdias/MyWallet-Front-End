@@ -23,20 +23,21 @@ export default function PrincipalPage() {
         console.log(answer);
       });
   }, []);
+  function total() {
+    let totalValue = registries.reduce((total, element) => {
+      if (element.isOutput) {
+        total -= Number(element.value);
+      } else {
+        total += Number(element.value);
+      }
+      return total;
+    }, 0);
+    totalValue = totalValue.toFixed(2).replace(".", ",");
+    return totalValue;
+  }
   return (
     <PrincipalPageStyle>
-      <span>
-        <p>Olá, {user.name}</p>
-        <IconExit
-          onClick={() => {
-            const answer = window.confirm("Deseja sair da conta ?");
-            if (answer) {
-              localStorage.removeItem("user");
-              navigate("/");
-            }
-          }}
-        ></IconExit>
-      </span>
+      <HelloUser name={user.name}></HelloUser>
       <AreaRegistriesStyle>
         {registries.length === 0 ? (
           <p>Não há registros de entrada ou saída</p>
@@ -58,16 +59,7 @@ export default function PrincipalPage() {
             </ListOfRegistriesStyle>
             <div>
               <span>SALDO</span>
-              <TotalValue>
-                {registries.reduce((total, element) => {
-                  if (element.isOutput) {
-                    total -= Number(element.value);
-                  } else {
-                    total += Number(element.value);
-                  }
-                  return total;
-                }, 0)}
-              </TotalValue>
+              <TotalValue>{total()}</TotalValue>
             </div>
           </>
         )}
@@ -84,8 +76,25 @@ export default function PrincipalPage() {
   );
 }
 function TotalValue(props) {
-  const total = Number(props.children);
+  const total = Number(props.children.replace(",", "."));
   return <TotalvalueStyle color={total}>{props.children}</TotalvalueStyle>;
+}
+function HelloUser({ name }) {
+  const navigate = useNavigate();
+  return (
+    <span>
+      <p>Olá, {name}</p>
+      <IconExit
+        onClick={() => {
+          const answer = window.confirm("Deseja sair da conta ?");
+          if (answer) {
+            localStorage.removeItem("user");
+            navigate("/");
+          }
+        }}
+      ></IconExit>
+    </span>
+  );
 }
 const TotalvalueStyle = styled.span`
   color: ${(props) => (props.color >= 0 ? "green" : "red")};

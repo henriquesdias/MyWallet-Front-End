@@ -1,29 +1,30 @@
 import FormStyle from "../../Styles/form";
-import ButtonStyle from "../../Styles/Button";
-import NewMovimentationStyle from "../../Styles/newMovimentation";
+import ButtonStyle from "../../Styles/button";
+import NewMovimentationStyle from "../../Styles/new-Movimentation";
 import { ThreeDots } from "react-loader-spinner";
 import { useState, useContext } from "react";
 import UserContext from "../context/userContext";
-import { useNavigate } from "react-router-dom";
-import { sendRegistry } from "../../Services/axios";
+import { useNavigate, useLocation } from "react-router-dom";
+import { updateRegistry } from "../../Services/axios";
 
-export default function NewEntry() {
+export default function OutputUpdate() {
   const [isBlocked, setIsBlocked] = useState(false);
   const { user } = useContext(UserContext);
+  const { state } = useLocation();
   const [form, setForm] = useState({
     value: "",
     description: "",
-    isOutput: false,
   });
   const navigate = useNavigate();
   function submitData(event) {
     event.preventDefault();
-    if (isNaN(form.value)) {
+    form.value = form.value.replace(",", ".");
+    if (isNaN(form.value) || form.value < 0) {
       alert("Digite um valor válido");
       return;
     }
     setIsBlocked(true);
-    sendRegistry(form, {
+    updateRegistry(state.id, form, {
       headers: { Authorization: `Bearer ${user.token}` },
     })
       .then(() => {
@@ -43,7 +44,7 @@ export default function NewEntry() {
   return (
     <NewMovimentationStyle>
       <FormStyle onSubmit={submitData}>
-        <h1>Nova entrada</h1>
+        <h1>Editar saída</h1>
         <input
           type="text"
           placeholder="Valor"
@@ -66,7 +67,7 @@ export default function NewEntry() {
           {isBlocked ? (
             <ThreeDots color="#FFFFFF" height={80} width={80} />
           ) : (
-            "Salvar entrada"
+            "Atualizar saída"
           )}
         </ButtonStyle>
       </FormStyle>

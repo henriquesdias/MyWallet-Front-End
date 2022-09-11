@@ -1,29 +1,30 @@
 import FormStyle from "../../Styles/form";
-import ButtonStyle from "../../Styles/Button";
-import NewMovimentationStyle from "../../Styles/newMovimentation";
-import { ThreeDots } from "react-loader-spinner";
+import ButtonStyle from "../../Styles/button";
+import NewMovimentationStyle from "../../Styles/new-Movimentation";
 import { useState, useContext } from "react";
 import UserContext from "../context/userContext";
-import { useLocation, useNavigate } from "react-router-dom";
-import { updateRegistry } from "../../Services/axios";
+import { useNavigate } from "react-router-dom";
+import { sendRegistry } from "../../Services/axios";
+import { ThreeDots } from "react-loader-spinner";
 
-export default function EntryUpdate() {
+export default function NewOutput() {
   const [isBlocked, setIsBlocked] = useState(false);
   const { user } = useContext(UserContext);
-  const { state } = useLocation();
   const [form, setForm] = useState({
     value: "",
     description: "",
+    isOutput: true,
   });
   const navigate = useNavigate();
   function submitData(event) {
     event.preventDefault();
-    if (isNaN(form.value)) {
+    form.value = form.value.replace(",", ".");
+    if (isNaN(form.value) || form.value < 0) {
       alert("Digite um valor válido");
       return;
     }
     setIsBlocked(true);
-    updateRegistry(state.id, form, {
+    sendRegistry(form, {
       headers: { Authorization: `Bearer ${user.token}` },
     })
       .then(() => {
@@ -43,7 +44,8 @@ export default function EntryUpdate() {
   return (
     <NewMovimentationStyle>
       <FormStyle onSubmit={submitData}>
-        <h1>Editar entrada</h1>
+        <h1>Nova saída</h1>
+
         <input
           type="text"
           placeholder="Valor"
@@ -66,7 +68,7 @@ export default function EntryUpdate() {
           {isBlocked ? (
             <ThreeDots color="#FFFFFF" height={80} width={80} />
           ) : (
-            "Atualizar entrada"
+            "Salvar saída"
           )}
         </ButtonStyle>
       </FormStyle>

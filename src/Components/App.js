@@ -4,12 +4,12 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ResetStyle from "../Styles/reset";
 import BodyStyle from "../Styles/body";
 import PrincipalPage from "./Pages/Principal-Page";
-import NewEntry from "./Pages/ NewEntry";
-import NewOutput from "./Pages/NewOutput";
+import NewEntry from "./Pages/ New-Entry";
+import NewOutput from "./Pages/New-Output";
 import UserContext from "./context/userContext";
 import { useState } from "react";
-import EntryUpdate from "./Pages/EntryUpdate";
-import OutputUpdate from "./Pages/OutputUpdate";
+import EntryUpdate from "./Pages/Entry-Update";
+import OutputUpdate from "./Pages/Output-Update";
 
 function App() {
   const [user, setUser] = useState(null);

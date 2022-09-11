@@ -1,5 +1,5 @@
 import FormStyle from "../../Styles/form";
-import ButtonStyle from "../../Styles/Button";
+import ButtonStyle from "../../Styles/button";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
