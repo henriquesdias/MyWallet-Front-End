@@ -21,13 +21,14 @@ export default function SignIn() {
     signIn(form)
       .then((answer) => {
         setIsBlocked(false);
-        setUser(answer.data);
+        setUser({ ...answer.data, name: answer.data.name });
         localStorage.setItem(
           "user",
           JSON.stringify({
             email: form.email,
             password: form.password,
             token: answer.data.token,
+            name: answer.data.name,
           })
         );
         navigate("/principal-page");

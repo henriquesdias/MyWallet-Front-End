@@ -17,7 +17,7 @@ export default function PrincipalPage() {
   useEffect(() => {
     getRegistries({ headers: { Authorization: `Bearer ${user.token}` } })
       .then((answer) => {
-        setRegistries(answer.data);
+        setRegistries(answer.data.reverse());
       })
       .catch((answer) => {
         console.log(answer);
@@ -31,6 +31,7 @@ export default function PrincipalPage() {
           onClick={() => {
             const answer = window.confirm("Deseja sair da conta ?");
             if (answer) {
+              localStorage.removeItem("user");
               navigate("/");
             }
           }}
@@ -50,6 +51,8 @@ export default function PrincipalPage() {
                   value={e.value}
                   isOutput={e.isOutput}
                   id={e._id}
+                  registries={registries}
+                  setRegistries={setRegistries}
                 ></Registry>
               ))}
             </ListOfRegistriesStyle>

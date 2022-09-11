@@ -8,6 +8,7 @@ import NewEntry from "./Pages/ NewEntry";
 import NewOutput from "./Pages/NewOutput";
 import UserContext from "./context/userContext";
 import { useState } from "react";
+
 function App() {
   const [user, setUser] = useState(null);
   if (localStorage.getItem("user") !== null && user === null) {
