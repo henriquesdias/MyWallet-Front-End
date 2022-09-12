@@ -39,7 +39,7 @@ export default function SignIn() {
         );
         navigate("/principal-page");
       })
-      .catch((answer) => {
+      .catch(() => {
         setIsBlocked(false);
         alert("Dados inválidos");
       });

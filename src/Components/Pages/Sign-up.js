@@ -30,6 +30,7 @@ export default function SignUp() {
       })
       .catch((answer) => {
         console.log(answer);
+        alert("Preencha todos os campos corretamente");
         if (answer.response.status === 409) {
           alert(answer.response.data);
         }

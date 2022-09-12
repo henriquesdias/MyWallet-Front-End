@@ -33,6 +33,7 @@ export default function OutputUpdate() {
       .catch((answer) => {
         setIsBlocked(false);
         console.log(answer);
+        alert("Preencha os campos corretamente");
       });
   }
   function handleForm(e) {
