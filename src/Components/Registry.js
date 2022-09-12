@@ -44,7 +44,7 @@ export default function Registry({
         </span>
       </div>
       <span>
-        {value.replace(".", ",")}
+        {value.toFixed(2).replace(".", ",")}
         <IconExclude
           onClick={() => {
             const confirm = window.confirm("Deseja apagar esse registro ?");

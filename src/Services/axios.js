@@ -21,6 +21,9 @@ function updateRegistry(idRegistry, body, config) {
     config
   );
 }
+function deleteSession(config) {
+  return axios.delete("http://localhost:5000/session", config);
+}
 export {
   signUp,
   signIn,
@@ -28,4 +31,5 @@ export {
   sendRegistry,
   deleteRegistry,
   updateRegistry,
+  deleteSession,
 };

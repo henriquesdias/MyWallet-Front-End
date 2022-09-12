@@ -2,13 +2,13 @@ import PrincipalPageStyle from "../../Styles/principal-page";
 import AreaRegistriesStyle from "../../Styles/registries";
 import ListOfRegistriesStyle from "../../Styles/list-registries";
 import { IconIn, IconExit, IconOut } from "../../Styles/icons";
-import styled from "styled-components";
 import Registry from "../Registry";
 import { useEffect, useState, useContext } from "react";
-import { getRegistries } from "../../Services/axios";
+import { getRegistries, deleteSession } from "../../Services/axios";
 import { useNavigate } from "react-router-dom";
 import OperationsStyle from "../../Styles/operations";
 import UserContext from "../context/userContext";
+import TotalvalueStyle from "../../Styles/totalValueStyle";
 
 export default function PrincipalPage() {
   const [registries, setRegistries] = useState([]);
@@ -49,7 +49,7 @@ export default function PrincipalPage() {
                   key={index}
                   date={e.date}
                   description={e.description}
-                  value={e.value}
+                  value={Number(e.value)}
                   isOutput={e.isOutput}
                   id={e._id}
                   registries={registries}
@@ -81,6 +81,7 @@ function TotalValue(props) {
 }
 function HelloUser({ name }) {
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
   return (
     <span>
       <p>Olá, {name}</p>
@@ -88,14 +89,17 @@ function HelloUser({ name }) {
         onClick={() => {
           const answer = window.confirm("Deseja sair da conta ?");
           if (answer) {
-            localStorage.removeItem("user");
-            navigate("/");
+            deleteSession({
+              headers: { Authorization: `Bearer ${user.token}` },
+            })
+              .catch((answer) => console.log(answer))
+              .then(() => {
+                localStorage.removeItem("user");
+                navigate("/");
+              });
           }
         }}
       ></IconExit>
     </span>
   );
 }
-const TotalvalueStyle = styled.span`
-  color: ${(props) => (props.color >= 0 ? "green" : "red")};
-`;
