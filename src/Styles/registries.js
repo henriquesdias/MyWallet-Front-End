@@ -1,16 +1,17 @@
 import styled from "styled-components";
 
 const AreaRegistriesStyle = styled.div`
+  position: relative;
   background-color: white;
-  height: 446px;
+  height: calc(100vh - 240px);
   border-radius: 5px;
-  margin: 22px 0 13px 0;
+  margin: 22px 0 20px 0;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   text-align: center;
-  padding: 0 11px 0 12px;
+  padding: 10px 11px 8px 12px;
   p {
     color: #868686;
     font-size: 20px;

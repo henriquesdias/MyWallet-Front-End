@@ -4,7 +4,8 @@ const PrincipalPageStyle = styled.main`
   width: 95%;
   max-width: 600px;
   margin: 0 auto;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   > span {
     display: flex;
     justify-content: space-between;
