@@ -1,28 +1,35 @@
 import axios from "axios";
 function signUp(body) {
-  return axios.post("http://localhost:5000/sign-up", body);
+  return axios.post(`${process.env.REACT_APP_API_BASE_URL}/sign-up`, body);
 }
 function signIn(body) {
-  return axios.post("http://localhost:5000/sign-in", body);
+  return axios.post(`${process.env.REACT_APP_API_BASE_URL}/sign-in`, body);
 }
 function getRegistries(config) {
-  return axios.get("http://localhost:5000/registries", config);
+  return axios.get(`${process.env.REACT_APP_API_BASE_URL}/registries`, config);
 }
 function sendRegistry(body, config) {
-  return axios.post("http://localhost:5000/registries", body, config);
+  return axios.post(
+    `${process.env.REACT_APP_API_BASE_URL}/registries`,
+    body,
+    config
+  );
 }
 function deleteRegistry(idRegistry, config) {
-  return axios.delete(`http://localhost:5000/registries/${idRegistry}`, config);
+  return axios.delete(
+    `${process.env.REACT_APP_API_BASE_URL}/registries/${idRegistry}`,
+    config
+  );
 }
 function updateRegistry(idRegistry, body, config) {
   return axios.put(
-    `http://localhost:5000/registries/${idRegistry}`,
+    `${process.env.REACT_APP_API_BASE_URL}/${idRegistry}`,
     body,
     config
   );
 }
 function deleteSession(config) {
-  return axios.delete("http://localhost:5000/session", config);
+  return axios.delete(`${process.env.REACT_APP_API_BASE_URL}/session`, config);
 }
 export {
   signUp,
