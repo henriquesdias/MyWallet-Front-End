@@ -1,4 +1,6 @@
 import axios from "axios";
+import dotenv from "dotenv";
+dotenv.config();
 function signUp(body) {
   return axios.post(`${process.env.REACT_APP_API_BASE_URL}/sign-up`, body);
 }
