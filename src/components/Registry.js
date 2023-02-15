@@ -7,16 +7,8 @@ import { IconExclude } from "../styles/icons";
 import UserContext from "../context/userContext";
 import { deleteRegistry } from "../services/axios";
 
-export default function Registry({
-  date,
-  description,
-  value,
-  isOutput,
-  id,
-  registries,
-  setRegistries,
-}) {
-  const idRegistry = id;
+export default function Registry({ registry, registries, setRegistries }) {
+  const idRegistry = registry._id;
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
   function excludeRegistry() {
@@ -25,28 +17,28 @@ export default function Registry({
     })
       .catch((answer) => console.log(answer))
       .then(() => {
-        setRegistries([...registries.filter((e) => e._id !== id)]);
+        setRegistries([...registries.filter((e) => e._id !== registry._id)]);
         navigate("/principal-page");
       });
   }
   return (
-    <RegistryStyle isOutput={isOutput}>
+    <RegistryStyle isOutput={registry.isOutput}>
       <div>
-        <span>{date}</span>
+        <span>{registry.date}</span>
         <span
           onClick={() => {
-            if (isOutput) {
-              navigate("/output-update", { state: { id } });
+            if (registry.isOutput) {
+              navigate("/output-update", { state: { id: registry._id } });
             } else {
-              navigate("/entry-update", { state: { id } });
+              navigate("/entry-update", { state: { id: registry._id } });
             }
           }}
         >
-          {description}
+          {registry.description}
         </span>
       </div>
       <span>
-        {value.toFixed(2).replace(".", ",")}
+        {registry.value.toFixed(2).replace(".", ",")}
         <IconExclude
           onClick={() => {
             const confirm = window.confirm("Deseja apagar esse registro ?");

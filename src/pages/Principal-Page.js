@@ -5,18 +5,16 @@ import { useNavigate } from "react-router-dom";
 import PrincipalPageStyle from "../styles/principal-page";
 import AreaRegistriesStyle from "../styles/registries";
 import ListOfRegistriesStyle from "../styles/list-registries";
-import { IconIn, IconOut } from "../styles/icons";
 import Registry from "../components/Registry";
 import { getRegistries } from "../services/axios";
-import OperationsStyle from "../styles/operations";
 import UserContext from "../context/userContext";
 import HelloUser from "../components/Hello-User";
 import TotalValue from "../components/Total-value";
+import Operations from "../components/Operations";
 
 export default function PrincipalPage() {
   const [registries, setRegistries] = useState([]);
   const { user } = useContext(UserContext);
-  const navigate = useNavigate();
   useEffect(() => {
     getRegistries({ headers: { Authorization: `Bearer ${user.token}` } })
       .then((answer) => {
@@ -38,11 +36,7 @@ export default function PrincipalPage() {
               {registries.map((e, index) => (
                 <Registry
                   key={index}
-                  date={e.date}
-                  description={e.description}
-                  value={Number(e.value)}
-                  isOutput={e.isOutput}
-                  id={e._id}
+                  registry={e}
                   registries={registries}
                   setRegistries={setRegistries}
                 ></Registry>
@@ -55,14 +49,7 @@ export default function PrincipalPage() {
           </>
         )}
       </AreaRegistriesStyle>
-      <OperationsStyle>
-        <div onClick={() => navigate("/new-entry")}>
-          <IconIn></IconIn> <span>Nova entrada</span>
-        </div>
-        <div onClick={() => navigate("/new-output")}>
-          <IconOut></IconOut> <span>Nova saída</span>
-        </div>
-      </OperationsStyle>
+      <Operations />
     </PrincipalPageStyle>
   );
 }
