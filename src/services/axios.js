@@ -24,7 +24,7 @@ function deleteRegistry(idRegistry, config) {
 }
 function updateRegistry(idRegistry, body, config) {
   return axios.put(
-    `${process.env.REACT_APP_API_BASE_URL}/${idRegistry}`,
+    `${process.env.REACT_APP_API_BASE_URL}/registries/${idRegistry}`,
     body,
     config
   );

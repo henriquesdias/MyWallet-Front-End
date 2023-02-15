@@ -1,9 +1,11 @@
-import { IconExclude } from "../Styles/icons";
-import styled from "styled-components";
-import UserContext from "./context/userContext";
 import { useContext } from "react";
-import { deleteRegistry } from "../Services/axios";
+
+import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+
+import { IconExclude } from "../styles/icons";
+import UserContext from "../context/userContext";
+import { deleteRegistry } from "../services/axios";
 
 export default function Registry({
   date,

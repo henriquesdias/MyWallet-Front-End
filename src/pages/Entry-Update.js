@@ -1,11 +1,13 @@
-import FormStyle from "../../Styles/form";
-import ButtonStyle from "../../Styles/button";
-import NewMovimentationStyle from "../../Styles/new-Movimentation";
-import { ThreeDots } from "react-loader-spinner";
 import { useState, useContext } from "react";
-import UserContext from "../context/userContext";
+
 import { useLocation, useNavigate } from "react-router-dom";
-import { updateRegistry } from "../../Services/axios";
+import { ThreeDots } from "react-loader-spinner";
+
+import FormStyle from "../styles/form";
+import ButtonStyle from "../styles/button";
+import NewMovimentationStyle from "../styles/new-Movimentation";
+import UserContext from "../context/userContext";
+import { updateRegistry } from "../services/axios";
 
 export default function EntryUpdate() {
   const [isBlocked, setIsBlocked] = useState(false);
