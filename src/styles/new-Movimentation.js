@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 const NewMovimentationStyle = styled.div`
   max-width: 600px;
   margin: 0 auto;

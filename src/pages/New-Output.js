@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
@@ -6,12 +6,10 @@ import { ThreeDots } from "react-loader-spinner";
 import FormStyle from "../styles/form";
 import ButtonStyle from "../styles/button";
 import NewMovimentationStyle from "../styles/new-Movimentation";
-import UserContext from "../context/userContext";
 import { sendRegistry } from "../services/axios";
 
 export default function NewOutput() {
   const [isBlocked, setIsBlocked] = useState(false);
-  const { user } = useContext(UserContext);
   const [form, setForm] = useState({
     value: "",
     description: "",
@@ -26,9 +24,7 @@ export default function NewOutput() {
       return;
     }
     setIsBlocked(true);
-    sendRegistry(form, {
-      headers: { Authorization: `Bearer ${user.token}` },
-    })
+    sendRegistry(form)
       .then(() => {
         navigate("/principal-page");
       })

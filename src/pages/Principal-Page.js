@@ -2,19 +2,18 @@ import { useEffect, useState, useContext } from "react";
 
 import PrincipalPageStyle from "../styles/principal-page";
 import AreaRegistriesStyle from "../styles/registries";
-import ListOfRegistriesStyle from "../styles/list-registries";
-import Registry from "../components/Registry";
 import { getRegistries } from "../services/axios";
 import UserContext from "../context/userContext";
 import HelloUser from "../components/Hello-User";
 import TotalValue from "../components/Total-value";
 import Operations from "../components/Operations";
+import ListOfRegistries from "../components/List-Of-Registries";
 
 export default function PrincipalPage() {
   const [registries, setRegistries] = useState([]);
   const { user } = useContext(UserContext);
   useEffect(() => {
-    getRegistries({ headers: { Authorization: `Bearer ${user.token}` } })
+    getRegistries()
       .then((answer) => {
         setRegistries(answer.data.reverse());
       })
@@ -30,16 +29,10 @@ export default function PrincipalPage() {
           <p>Não há registros de entrada ou saída</p>
         ) : (
           <>
-            <ListOfRegistriesStyle>
-              {registries.map((e, index) => (
-                <Registry
-                  key={index}
-                  registry={e}
-                  registries={registries}
-                  setRegistries={setRegistries}
-                ></Registry>
-              ))}
-            </ListOfRegistriesStyle>
+            <ListOfRegistries
+              registries={registries}
+              setRegistries={setRegistries}
+            />
             <div>
               <span>SALDO</span>
               <TotalValue registries={registries} />

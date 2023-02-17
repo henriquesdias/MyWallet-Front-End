@@ -1,36 +1,47 @@
 import axios from "axios";
 
+function config() {
+  const user = JSON.parse(localStorage.getItem("user"));
+  return { headers: { Authorization: `Bearer ${user.token}` } };
+}
+
 function signUp(body) {
   return axios.post(`${process.env.REACT_APP_API_BASE_URL}/sign-up`, body);
 }
 function signIn(body) {
   return axios.post(`${process.env.REACT_APP_API_BASE_URL}/sign-in`, body);
 }
-function getRegistries(config) {
-  return axios.get(`${process.env.REACT_APP_API_BASE_URL}/registries`, config);
+function getRegistries() {
+  return axios.get(
+    `${process.env.REACT_APP_API_BASE_URL}/registries`,
+    config()
+  );
 }
-function sendRegistry(body, config) {
+function sendRegistry(body) {
   return axios.post(
     `${process.env.REACT_APP_API_BASE_URL}/registries`,
     body,
-    config
+    config()
   );
 }
-function deleteRegistry(idRegistry, config) {
+function deleteRegistry(idRegistry) {
   return axios.delete(
     `${process.env.REACT_APP_API_BASE_URL}/registries/${idRegistry}`,
-    config
+    config()
   );
 }
-function updateRegistry(idRegistry, body, config) {
+function updateRegistry(idRegistry, body) {
   return axios.put(
     `${process.env.REACT_APP_API_BASE_URL}/registries/${idRegistry}`,
     body,
-    config
+    config()
   );
 }
-function deleteSession(config) {
-  return axios.delete(`${process.env.REACT_APP_API_BASE_URL}/session`, config);
+function deleteSession() {
+  return axios.delete(
+    `${process.env.REACT_APP_API_BASE_URL}/session`,
+    config()
+  );
 }
 export {
   signUp,

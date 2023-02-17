@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { OperationStyle } from "../styles/Operations-style";
+import { OperationStyle } from "../styles/operations-style";
 
 export default function OperationButton({ children, isOutPut }) {
   const navigate = useNavigate();
