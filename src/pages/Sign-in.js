@@ -46,12 +46,7 @@ export default function SignIn() {
         alert("Dados inválidos");
       });
   }
-  function handleForm(e) {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  }
+
   return (
     <SignInStyle>
       <h1>MyWallet</h1>
@@ -62,7 +57,12 @@ export default function SignIn() {
           name="email"
           required
           value={form.email}
-          onChange={handleForm}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              [e.target.name]: e.target.value,
+            })
+          }
           readOnly={isBlocked}
         />
         <input
@@ -71,7 +71,12 @@ export default function SignIn() {
           name="password"
           required
           value={form.password}
-          onChange={handleForm}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              [e.target.name]: e.target.value,
+            })
+          }
           readOnly={isBlocked}
         />
         <ButtonStyle type="submit" disabled={isBlocked}>

@@ -38,12 +38,7 @@ export default function SignUp() {
         setIsBlocked(false);
       });
   }
-  function handleForm(e) {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  }
+
   return (
     <SignUpStyle>
       <h1>MyWallet</h1>
@@ -54,7 +49,12 @@ export default function SignUp() {
           name="name"
           required
           value={form.name}
-          onChange={handleForm}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              [e.target.name]: e.target.value,
+            })
+          }
           readOnly={isBlocked}
         />
         <input
@@ -63,7 +63,12 @@ export default function SignUp() {
           name="email"
           required
           value={form.email}
-          onChange={handleForm}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              [e.target.name]: e.target.value,
+            })
+          }
           readOnly={isBlocked}
         />
         <input
@@ -72,7 +77,12 @@ export default function SignUp() {
           name="password"
           required
           value={form.password}
-          onChange={handleForm}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              [e.target.name]: e.target.value,
+            })
+          }
           readOnly={isBlocked}
         />
         <input
@@ -81,7 +91,12 @@ export default function SignUp() {
           name="confirmPassword"
           required
           value={form.confirmPassword}
-          onChange={handleForm}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              [e.target.name]: e.target.value,
+            })
+          }
           readOnly={isBlocked}
         />
         <ButtonStyle type="submit" disabled={isBlocked}>

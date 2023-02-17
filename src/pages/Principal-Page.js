@@ -1,7 +1,5 @@
 import { useEffect, useState, useContext } from "react";
 
-import { useNavigate } from "react-router-dom";
-
 import PrincipalPageStyle from "../styles/principal-page";
 import AreaRegistriesStyle from "../styles/registries";
 import ListOfRegistriesStyle from "../styles/list-registries";
@@ -26,7 +24,7 @@ export default function PrincipalPage() {
   }, []);
   return (
     <PrincipalPageStyle>
-      <HelloUser name={user.name}></HelloUser>
+      <HelloUser name={user.name} />
       <AreaRegistriesStyle>
         {registries.length === 0 ? (
           <p>Não há registros de entrada ou saída</p>

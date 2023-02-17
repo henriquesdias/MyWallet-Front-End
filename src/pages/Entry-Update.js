@@ -38,12 +38,7 @@ export default function EntryUpdate() {
         alert("Preencha os campos corretamente");
       });
   }
-  function handleForm(e) {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  }
+
   return (
     <NewMovimentationStyle>
       <FormStyle onSubmit={submitData}>
@@ -54,7 +49,12 @@ export default function EntryUpdate() {
           name="value"
           required
           value={form.name}
-          onChange={handleForm}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              [e.target.name]: e.target.value,
+            })
+          }
           readOnly={isBlocked}
         />
         <input
@@ -63,7 +63,12 @@ export default function EntryUpdate() {
           name="description"
           required
           value={form.email}
-          onChange={handleForm}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              [e.target.name]: e.target.value,
+            })
+          }
           readOnly={isBlocked}
         />
         <ButtonStyle type="submit" disabled={isBlocked}>
