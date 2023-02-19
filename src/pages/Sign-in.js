@@ -1,68 +1,68 @@
-import FormStyle from "../../Styles/form";
-import ButtonStyle from "../../Styles/button";
+import { useState, useContext, useEffect } from "react";
+
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { signUp } from "../../Services/axios";
 import { ThreeDots } from "react-loader-spinner";
 
-export default function SignUp() {
+import FormStyle from "../styles/form";
+import ButtonStyle from "../styles/button";
+import { signIn } from "../services/axios";
+import UserContext from "../context/userContext";
+
+export default function SignIn() {
   const [isBlocked, setIsBlocked] = useState(false);
+  const { setUser } = useContext(UserContext);
   const [form, setForm] = useState({
-    name: "",
     email: "",
     password: "",
-    confirmPassword: "",
   });
   const navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("user") !== null) {
+      setUser(JSON.parse(localStorage.getItem("user")));
+      navigate("/principal-page");
+    }
+  }, []);
   function submitData(event) {
     event.preventDefault();
     setIsBlocked(true);
-    if (form.password !== form.confirmPassword) {
-      alert("As senhas fornecidas devem ser iguais");
-      setIsBlocked(false);
-      return;
-    }
-    signUp(form)
-      .then(() => {
+    signIn(form)
+      .then((answer) => {
         setIsBlocked(false);
-        navigate("/");
+        setUser({ ...answer.data, name: answer.data.name });
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            email: form.email,
+            password: form.password,
+            token: answer.data.token,
+            name: answer.data.name,
+          })
+        );
+        navigate("/principal-page");
       })
-      .catch((answer) => {
-        console.log(answer);
-        alert("Preencha todos os campos corretamente");
-        if (answer.response.status === 409) {
-          alert(answer.response.data);
-        }
+      .catch(() => {
         setIsBlocked(false);
+        alert("Dados inválidos");
       });
   }
-  function handleForm(e) {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  }
+
   return (
-    <SignUpStyle>
+    <SignInStyle>
       <h1>MyWallet</h1>
       <FormStyle onSubmit={submitData}>
-        <input
-          type="name"
-          placeholder="Nome"
-          name="name"
-          required
-          value={form.name}
-          onChange={handleForm}
-          readOnly={isBlocked}
-        />
         <input
           type="email"
           placeholder="E-mail"
           name="email"
           required
           value={form.email}
-          onChange={handleForm}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              [e.target.name]: e.target.value,
+            })
+          }
           readOnly={isBlocked}
         />
         <input
@@ -71,34 +71,30 @@ export default function SignUp() {
           name="password"
           required
           value={form.password}
-          onChange={handleForm}
-          readOnly={isBlocked}
-        />
-        <input
-          type="password"
-          placeholder="Confirme a senha"
-          name="confirmPassword"
-          required
-          value={form.confirmPassword}
-          onChange={handleForm}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              [e.target.name]: e.target.value,
+            })
+          }
           readOnly={isBlocked}
         />
         <ButtonStyle type="submit" disabled={isBlocked}>
           {!isBlocked ? (
-            "Cadastrar"
+            "Entrar"
           ) : (
             <ThreeDots color="#FFFFFF" height={80} width={80} />
           )}
         </ButtonStyle>
-        <Link to={"/"} style={{ textDecoration: "none" }}>
-          <p>Já tem uma conta? Entre agora!</p>
+        <Link to={"/sign-up"} style={{ textDecoration: "none" }}>
+          <p>Primeira vez? Cadastre-se!</p>
         </Link>
       </FormStyle>
-    </SignUpStyle>
+    </SignInStyle>
   );
 }
 
-const SignUpStyle = styled.div`
+const SignInStyle = styled.div`
   width: 100%;
   margin: 0 auto;
   display: flex;

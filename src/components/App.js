@@ -1,15 +1,15 @@
-import SignUp from "./Pages/Sign-up";
-import SignIn from "./Pages/Sign-in";
+import SignUp from "../pages/Sign-up";
+import SignIn from "../pages/Sign-in";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ResetStyle from "../Styles/reset";
-import BodyStyle from "../Styles/body";
-import PrincipalPage from "./Pages/Principal-Page";
-import NewEntry from "./Pages/ New-Entry";
-import NewOutput from "./Pages/New-Output";
-import UserContext from "./context/userContext";
+import ResetStyle from "../styles/reset";
+import BodyStyle from "../styles/body";
+import PrincipalPage from "../pages/Principal-Page";
+import NewEntry from "../pages/ New-Entry";
+import NewOutput from "../pages/New-Output";
+import UserContext from "../context/userContext";
 import { useState } from "react";
-import EntryUpdate from "./Pages/Entry-Update";
-import OutputUpdate from "./Pages/Output-Update";
+import EntryUpdate from "../pages/Entry-Update";
+import OutputUpdate from "../pages/Output-Update";
 
 function App() {
   const [user, setUser] = useState(null);

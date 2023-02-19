@@ -1,15 +1,15 @@
-import FormStyle from "../../Styles/form";
-import ButtonStyle from "../../Styles/button";
-import NewMovimentationStyle from "../../Styles/new-Movimentation";
-import { useState, useContext } from "react";
-import UserContext from "../context/userContext";
+import { useState } from "react";
+
 import { useNavigate } from "react-router-dom";
-import { sendRegistry } from "../../Services/axios";
 import { ThreeDots } from "react-loader-spinner";
+
+import FormStyle from "../styles/form";
+import ButtonStyle from "../styles/button";
+import NewMovimentationStyle from "../styles/new-Movimentation";
+import { sendRegistry } from "../services/axios";
 
 export default function NewOutput() {
   const [isBlocked, setIsBlocked] = useState(false);
-  const { user } = useContext(UserContext);
   const [form, setForm] = useState({
     value: "",
     description: "",
@@ -24,9 +24,7 @@ export default function NewOutput() {
       return;
     }
     setIsBlocked(true);
-    sendRegistry(form, {
-      headers: { Authorization: `Bearer ${user.token}` },
-    })
+    sendRegistry(form)
       .then(() => {
         navigate("/principal-page");
       })
@@ -36,12 +34,7 @@ export default function NewOutput() {
         alert("Preencha os campos corretamente");
       });
   }
-  function handleForm(e) {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  }
+
   return (
     <NewMovimentationStyle>
       <FormStyle onSubmit={submitData}>
@@ -53,7 +46,12 @@ export default function NewOutput() {
           name="value"
           required
           value={form.name}
-          onChange={handleForm}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              [e.target.name]: e.target.value,
+            })
+          }
           readOnly={isBlocked}
         />
         <input
@@ -62,7 +60,12 @@ export default function NewOutput() {
           name="description"
           required
           value={form.email}
-          onChange={handleForm}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              [e.target.name]: e.target.value,
+            })
+          }
           readOnly={isBlocked}
         />
         <ButtonStyle type="submit" disabled={isBlocked}>

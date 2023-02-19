@@ -1,19 +1,19 @@
-import FormStyle from "../../Styles/form";
-import ButtonStyle from "../../Styles/button";
-import NewMovimentationStyle from "../../Styles/new-Movimentation";
-import { ThreeDots } from "react-loader-spinner";
-import { useState, useContext } from "react";
-import UserContext from "../context/userContext";
-import { useLocation, useNavigate } from "react-router-dom";
-import { updateRegistry } from "../../Services/axios";
+import { useState } from "react";
 
-export default function EntryUpdate() {
+import { ThreeDots } from "react-loader-spinner";
+import { useNavigate } from "react-router-dom";
+
+import FormStyle from "../styles/form";
+import ButtonStyle from "../styles/button";
+import NewMovimentationStyle from "../styles/new-Movimentation";
+import { sendRegistry } from "../services/axios";
+
+export default function NewEntry() {
   const [isBlocked, setIsBlocked] = useState(false);
-  const { user } = useContext(UserContext);
-  const { state } = useLocation();
   const [form, setForm] = useState({
     value: "",
     description: "",
+    isOutput: false,
   });
   const navigate = useNavigate();
   function submitData(event) {
@@ -24,9 +24,7 @@ export default function EntryUpdate() {
       return;
     }
     setIsBlocked(true);
-    updateRegistry(state.id, form, {
-      headers: { Authorization: `Bearer ${user.token}` },
-    })
+    sendRegistry(form)
       .then(() => {
         navigate("/principal-page");
       })
@@ -36,23 +34,23 @@ export default function EntryUpdate() {
         alert("Preencha os campos corretamente");
       });
   }
-  function handleForm(e) {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  }
+
   return (
     <NewMovimentationStyle>
       <FormStyle onSubmit={submitData}>
-        <h1>Editar entrada</h1>
+        <h1>Nova entrada</h1>
         <input
           type="text"
           placeholder="Valor"
           name="value"
           required
           value={form.name}
-          onChange={handleForm}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              [e.target.name]: e.target.value,
+            })
+          }
           readOnly={isBlocked}
         />
         <input
@@ -61,14 +59,19 @@ export default function EntryUpdate() {
           name="description"
           required
           value={form.email}
-          onChange={handleForm}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              [e.target.name]: e.target.value,
+            })
+          }
           readOnly={isBlocked}
         />
         <ButtonStyle type="submit" disabled={isBlocked}>
           {isBlocked ? (
             <ThreeDots color="#FFFFFF" height={80} width={80} />
           ) : (
-            "Atualizar entrada"
+            "Salvar entrada"
           )}
         </ButtonStyle>
       </FormStyle>

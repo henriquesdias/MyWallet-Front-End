@@ -1,10 +1,12 @@
+import styled from "styled-components";
+
 import {
   IoAddCircleOutline,
   IoExitOutline,
   IoRemoveCircleOutline,
   IoCloseOutline,
 } from "react-icons/io5";
-import styled from "styled-components";
+
 const IconIn = styled(IoAddCircleOutline)`
   color: white;
   font-size: 25px;
